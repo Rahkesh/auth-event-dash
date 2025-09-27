@@ -83,25 +83,38 @@ export const Calendar: React.FC<CalendarProps> = ({ events, onAddEvent, onDelete
         <div
           key={day}
           onClick={() => handleDateClick(day)}
-          className={`h-24 p-1 border border-border cursor-pointer hover:bg-accent transition-colors ${
-            isToday ? 'bg-primary/10 border-primary' : ''
+          className={`h-28 p-3 border border-border/30 cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:z-10 relative group ${
+            isToday 
+              ? 'bg-gradient-accent text-white shadow-glow animate-glow' 
+              : 'bg-white dark:bg-gray-800 hover:bg-gradient-to-br hover:from-blue-50 hover:to-purple-50 dark:hover:from-gray-700 dark:hover:to-purple-900/30'
           }`}
         >
-          <div className={`text-sm font-medium ${isToday ? 'text-primary' : 'text-foreground'}`}>
+          <div className={`text-sm font-semibold mb-2 ${
+            isToday ? 'text-white' : 'text-foreground group-hover:text-primary transition-colors'
+          }`}>
             {day}
           </div>
-          <div className="mt-1 space-y-1">
-            {dayEvents.slice(0, 2).map(event => (
-              <div
-                key={event.id}
-                className="text-xs p-1 bg-primary text-primary-foreground rounded truncate"
-                title={event.title}
-              >
-                {event.title}
-              </div>
-            ))}
+          <div className="space-y-1">
+            {dayEvents.slice(0, 2).map((event, index) => {
+              const colors = [
+                'bg-gradient-to-r from-purple-500 to-purple-600',
+                'bg-gradient-to-r from-blue-500 to-blue-600',
+                'bg-gradient-to-r from-green-500 to-green-600',
+                'bg-gradient-to-r from-orange-500 to-orange-600',
+                'bg-gradient-to-r from-pink-500 to-pink-600',
+              ];
+              return (
+                <div
+                  key={event.id}
+                  className={`text-xs p-1.5 text-white rounded-md truncate shadow-sm ${colors[index % colors.length]} transition-all hover:shadow-md`}
+                  title={event.title}
+                >
+                  {event.title}
+                </div>
+              );
+            })}
             {dayEvents.length > 2 && (
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground font-medium bg-gray-100 dark:bg-gray-700 px-1.5 py-1 rounded-md">
                 +{dayEvents.length - 2} more
               </div>
             )}
@@ -114,31 +127,38 @@ export const Calendar: React.FC<CalendarProps> = ({ events, onAddEvent, onDelete
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
+    <div className="space-y-8 animate-fade-in">
+      <Card className="shadow-card border-0 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-purple-900/20 overflow-hidden">
+        <CardHeader className="bg-gradient-primary text-white">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl">
-              {monthNames[currentMonth]} {currentYear}
-            </CardTitle>
-            <div className="flex items-center space-x-2">
+            <div>
+              <CardTitle className="text-3xl font-bold text-white">
+                {monthNames[currentMonth]} {currentYear}
+              </CardTitle>
+              <p className="text-white/80 text-sm mt-1">
+                {events.length} event{events.length !== 1 ? 's' : ''} this month
+              </p>
+            </div>
+            <div className="flex items-center space-x-3">
               <Button
-                variant="outline"
+                variant="secondary"
                 size="icon"
                 onClick={() => navigateMonth('prev')}
+                className="bg-white/20 backdrop-blur-sm border border-white/10 text-white hover:bg-white/30 transition-all duration-300"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="icon"
                 onClick={() => navigateMonth('next')}
+                className="bg-white/20 backdrop-blur-sm border border-white/10 text-white hover:bg-white/30 transition-all duration-300"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
               <Button
                 onClick={() => setIsModalOpen(true)}
-                className="ml-4"
+                className="ml-2 bg-white text-primary hover:bg-gray-50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Event
@@ -146,10 +166,10 @@ export const Calendar: React.FC<CalendarProps> = ({ events, onAddEvent, onDelete
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-7 gap-0 border border-border">
+        <CardContent className="p-0">
+          <div className="grid grid-cols-7 gap-0">
             {weekdays.map(day => (
-              <div key={day} className="p-2 bg-muted font-medium text-center border-r border-border last:border-r-0">
+              <div key={day} className="p-4 bg-gradient-to-r from-gray-50 to-blue-50/50 dark:from-gray-800 dark:to-purple-800/30 font-semibold text-center border-r border-border/50 last:border-r-0 text-muted-foreground">
                 {day}
               </div>
             ))}

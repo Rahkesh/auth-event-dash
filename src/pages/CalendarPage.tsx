@@ -40,7 +40,7 @@ const CalendarPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
       <Header />
       <main className="container mx-auto px-4 py-8">
         <Calendar

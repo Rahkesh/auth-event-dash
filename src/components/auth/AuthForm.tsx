@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { signIn, signUp } from '@/lib/auth';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Calendar } from 'lucide-react';
 
 export const AuthForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -59,11 +59,14 @@ export const AuthForm: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Calendar App</CardTitle>
-          <CardDescription>Sign in to manage your events</CardDescription>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20 p-4">
+      <Card className="w-full max-w-md shadow-elegant border-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm animate-scale-in">
+        <CardHeader className="text-center pb-8">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-primary rounded-full flex items-center justify-center shadow-glow">
+            <Calendar className="h-8 w-8 text-white" />
+          </div>
+          <CardTitle className="text-3xl font-bold bg-gradient-accent bg-clip-text text-transparent">Calendar App</CardTitle>
+          <CardDescription className="text-muted-foreground mt-2">Sign in to manage your events beautifully</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
@@ -94,7 +97,11 @@ export const AuthForm: React.FC = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300 hover:scale-105" 
+                  disabled={loading}
+                >
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Sign In
                 </Button>
@@ -124,7 +131,11 @@ export const AuthForm: React.FC = () => {
                     minLength={6}
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-accent hover:shadow-glow transition-all duration-300 hover:scale-105" 
+                  disabled={loading}
+                >
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   Sign Up
                 </Button>
